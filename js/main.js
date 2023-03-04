@@ -4,30 +4,36 @@ const loadData = async () => {
     const res = await fetch(url);
     const data = await res.json();
     displayCard(data.data.tools.slice(0, 6));
+    sortDates((data.data.tools.map(tool => tool.published_in)));
+   
 }
+
+
+
 
 // Spinner Element
 const loadingSpinner = document.getElementById('loadingSpinner');
 
 
-// Dates Input 
-let dates = [];
-const dateSort = (dates) => {
-    dates.sort(function (a, b) {
-            if (a < b) return -1;
-            if (a > b) return 1;
-            return 0;    
-    });
-}
+function sortDates(dates) {
+    // Parse dates to date objects
+    const dateObjects = dates.map(date => new Date(Date.parse(date)));
+    // Sort date objects
+    dateObjects.sort((a, b) => a - b);
+    // Convert date objects back to strings
+    const sortedDates = dateObjects.map(date => date.toISOString().slice(0, 10));
+    // Return sorted dates as array of strings
+  console.log(sortedDates);
+  }
+  
 
 // Display Card Function 
 
-const displayCard = (cards) => {
+const displayCard = (cards, sortedDates) => {
     const cardContainer = document.getElementById('cards-container')
     loadingSpinner.classList.remove('d-none');
     cards.forEach(card => {
         const cardFeatures = card.features
-        const date = (card.published_in)
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('col');
         cardDiv.innerHTML = `
@@ -129,6 +135,8 @@ const loadMoreBtn = document.getElementById('moreButton').addEventListener('clic
 })
 
 loadData();
+
+
 
 
 
