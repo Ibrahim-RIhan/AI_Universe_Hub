@@ -8,7 +8,6 @@ const loadData = async () => {
     sortDates((data.data.tools.map(tool => tool.published_in)));
 }
 
-
 // Spinner Element
 
 const loadingSpinner = document.getElementById('loadingSpinner');
@@ -22,7 +21,6 @@ const loadingSpinner = document.getElementById('loadingSpinner');
         const sortedDates = dateObjects.map(date => date.toISOString().slice(0, 10));
         console.log(sortedDates);
     }
-
 
 // Display Card Function 
 
@@ -52,8 +50,7 @@ const displayCard = (cards, sortedDates) => {
                      <p class=" mt-3 text-secondary">${card.published_in ? card.published_in : "No Published Date Found"}</p>
                 </div> 
             </div>
-
-               <button onclick="loadIDDetails('${card.id}')" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+               <button onclick="loadIDDetails('${card.id}')" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
                <img class="w-7" src="./images/vector.png" alt="" >
              </button>
                </div>
@@ -129,7 +126,8 @@ const loadMoreBtn = document.getElementById('moreButton').addEventListener('clic
     loadingSpinner.classList.add('d-none');
 
 })
-// Call The function 
+
+// Call  Function
 loadData();
 
 
