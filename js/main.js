@@ -1,10 +1,11 @@
 // Load Data From API Function 
 const loadData = async () => {
+    loadingSpinner.classList.remove('d-none');
     const url = 'https://openapi.programming-hero.com/api/ai/tools';
     const res = await fetch(url);
     const data = await res.json();
     displayCard(data.data.tools.slice(0, 6));
-    DisplayDates((data.data.tools.map(tool => tool.published_in)));
+    sortDates((data.data.tools.map(tool => tool.published_in)));
 
 }
 
@@ -12,21 +13,19 @@ const loadData = async () => {
 
 
 // Spinner Element
+
 const loadingSpinner = document.getElementById('loadingSpinner');
 
 
-document.getElementById('btn-sort').addEventListener( 'click', function DisplayDates(dates){
+// Date Sorting Function 
+
     function sortDates(dates) {
-        // Parse dates to date objects
         const dateObjects = dates.map(date => new Date(Date.parse(date)));
-        // Sort date objects
         dateObjects.sort((a, b) => a - b);
-        // Convert date objects back to strings
         const sortedDates = dateObjects.map(date => date.toISOString().slice(0, 10));
-        // Return sorted dates as array of strings
         console.log(sortedDates);
     }
-})
+
   
 
 
@@ -88,7 +87,6 @@ const loadIDDetails = async (id) => {
 
 const displayModalDetails = (card) => {
     loadingSpinner.classList.remove('d-none');
-    console.log(card);
     const AiDescription = document.getElementById('AiDescription');
     AiDescription.innerText = card.description ? card.description : "No Description Found";
     const features1 = document.getElementById('features1')
