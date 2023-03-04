@@ -74,31 +74,31 @@ const displayModalDetails = (card) => {
     const AiDescription = document.getElementById('AiDescription');
     AiDescription.innerText = card.description ? card.description : "No Description Found";
     const features1 = document.getElementById('features1')
-    features1.innerText = card.features["1"].feature_name ? card.features["1"].feature_name : "No Features Found";
+    features1.innerText = card.features["1"].feature_name ? card.features["1"].feature_name : "No Data Found";
     const features2 = document.getElementById('features2')
-    features2.innerText = card.features["2"].feature_name ? card.features["2"].feature_name : "No Features Found";
+    features2.innerText = card.features["2"].feature_name ? card.features["2"].feature_name : "No Data Found";
     const features3 = document.getElementById('features3')
-    features3.innerText = card.features["3"].feature_name ? card.features["3"].feature_name : "No Features Found";
+    features3.innerText = card.features["3"].feature_name ? card.features["3"].feature_name : "No Data Found";
     const integration1 = document.getElementById('integration1')
-    integration1.innerText = card.integrations && card.integrations[0] ? card.integrations[0] : "No Integration Found";
+    integration1.innerText = card.integrations && card.integrations[0] ? card.integrations[0] : "No Data Found";
     const integration2 = document.getElementById('integration2')
-    integration2.innerText = card.integrations && card.integrations[1] ? card.integrations[1] : "No Integration Found";
+    integration2.innerText = card.integrations && card.integrations[1] ? card.integrations[1] : "No Data Found";
     const integration3 = document.getElementById('integration3')
-    integration3.innerText = card.integrations && card.integrations[2] ? card.integrations[2] : "No Integration Found";
+    integration3.innerText = card.integrations && card.integrations[2] ? card.integrations[2] : "No Data Found";
     const AiImage = document.getElementById('AiImage');
     AiImage.src = card.image_link[0];
     const accuracy = document.getElementById('accuracy');
     const accuracyButton = document.getElementById('accuracyButton');
     accuracy.innerText = card.accuracy.score === null ? accuracyButton.style.display = 'none' : card.accuracy.score * 100 ;
     document.getElementById('AiExampleInput').innerText = card.input_output_examples === null ? "Can You Give Any Example ?" : card.input_output_examples[0].input;
-    document.getElementById('AiExampleOutput').innerText = card.input_output_examples === null ? "No ! Not YEt ! TAke A Break !!!" : card.input_output_examples[0].output;
+    document.getElementById('AiExampleOutput').innerText = card.input_output_examples === null ? "No! Not Yet! Take a break!!!" : card.input_output_examples[0].output;
     // Pricing 
     document.getElementById('BasicPlan').innerText = card.pricing === null ? "Free OF Cost" : card.pricing[0].plan;
-    document.getElementById('BasicPrice').innerText = card.pricing === null ? "" : card.pricing[0].price;
+    document.getElementById('BasicPrice').innerText = card.pricing === null ? "Basic" : card.pricing[0].price;
     document.getElementById('ProPlan').innerText = card.pricing === null ? "Free OF Cost" : card.pricing[1].plan;
-    document.getElementById('ProPrice').innerText = card.pricing === null ? "" : card.pricing[1].price;
+    document.getElementById('ProPrice').innerText = card.pricing === null ? "Pro" : card.pricing[1].price;
     document.getElementById('EnterprisePlan').innerText = card.pricing === null ? "Free OF Cost" : card.pricing[2].plan;
-    document.getElementById('EnterprisePrice').innerText = card.pricing === null ? "" : card.pricing[2].price;
+    document.getElementById('EnterprisePrice').innerText = card.pricing === null ? "Enterprise" : card.pricing[2].price;
     loadingSpinner.classList.add('d-none');
 };
 
