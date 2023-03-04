@@ -6,10 +6,7 @@ const loadData = async () => {
     const data = await res.json();
     displayCard(data.data.tools.slice(0, 6));
     sortDates((data.data.tools.map(tool => tool.published_in)));
-
 }
-
-
 
 
 // Spinner Element
@@ -25,10 +22,6 @@ const loadingSpinner = document.getElementById('loadingSpinner');
         const sortedDates = dateObjects.map(date => date.toISOString().slice(0, 10));
         console.log(sortedDates);
     }
-
-  
-
-
 
 
 // Display Card Function 
@@ -48,7 +41,7 @@ const displayCard = (cards, sortedDates) => {
         <ol class="list-decimal px-3">
           <li>${card.features[0] ? card.features[0] : card.features[1]}</li>
           <li>${card.features[1] ? card.features[1] : card.features[2]}</li>
-          <li>${card.features[2] ? card.features[2] : style = "display:none;"}</li>
+          <li>${card.features[2] ? card.features[2] : "No Data Found"}</li>
           </ol>
           <hr>
         <div class="my-1 d-flex justify-content-between align-items-center">
@@ -136,7 +129,7 @@ const loadMoreBtn = document.getElementById('moreButton').addEventListener('clic
     loadingSpinner.classList.add('d-none');
 
 })
-
+// Call The function 
 loadData();
 
 
