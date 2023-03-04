@@ -1,4 +1,4 @@
-// Load Data Function 
+// Load Data From API Function 
 const loadData = async () => {
     const url = 'https://openapi.programming-hero.com/api/ai/tools';
     const res = await fetch(url);
@@ -12,17 +12,22 @@ const loadingSpinner = document.getElementById('loadingSpinner');
 
 // Dates Input 
 let dates = [];
-console.log(dates);
-
+const dateSort = (dates) => {
+    dates.sort(function (a, b) {
+            if (a < b) return -1;
+            if (a > b) return 1;
+            return 0;    
+    });
+}
 
 // Display Card Function 
+
 const displayCard = (cards) => {
     const cardContainer = document.getElementById('cards-container')
     loadingSpinner.classList.remove('d-none');
     cards.forEach(card => {
         const cardFeatures = card.features
         const date = (card.published_in)
-        dates.push(date);
         const cardDiv = document.createElement('div');
         cardDiv.classList.add('col');
         cardDiv.innerHTML = `
@@ -58,6 +63,7 @@ const displayCard = (cards) => {
 
 }
 // Load Modal  Details 
+
 const loadIDDetails = async (id) => {
     loadingSpinner.classList.remove('d-none');
     const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
@@ -68,6 +74,7 @@ const loadIDDetails = async (id) => {
 
 }
 //  Display Modal Details 
+
 const displayModalDetails = (card) => {
     loadingSpinner.classList.remove('d-none');
     console.log(card);
@@ -102,26 +109,8 @@ const displayModalDetails = (card) => {
     loadingSpinner.classList.add('d-none');
 };
 
-const dateSort = (dates) => {
-    sort(function (a, b) { return a - b });
-
-}
-
-
-
-
-// function sortDates() {
-//     dates.sort(function(a, b) {
-//         console.log(new Date(a) - new Date(b));
-//        }
-
-//     )
-// };
-
-
-
-
 // Show More Button
+
 const loadMoreBtn = document.getElementById('moreButton').addEventListener('click', function loadMoreBtn() {
     loadingSpinner.classList.remove('d-none');
     let start = 6
