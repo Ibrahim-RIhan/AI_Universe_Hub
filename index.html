@@ -2,86 +2,109 @@
 <html lang="en" data-theme="light">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.3/dist/full.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>AI Universe</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <title>AI Universe</title>
 </head>
 
 <body style="font-family: 'Work Sans', sans-serif;" class="overflow-x-hidden">
-    <header class="my-7 text-center">
-        <h1 class="text-5xl my-12 font-semibold text-center ">AI Universe Hub</h1>
-        <button class="p-6  rounded-md font-semibold text-xl text-white  bg-red-400">Sort By Date</button>
-    </header>
-    <main class="container mx-auto mt-12">
-        <section id="cards-container" class="grid items-center justify-center grid-cols-1 lg:grid-cols-3 gap-5">
-         
-        </section>
-        <!-- Show More Button section -->
-        <section class="text-center">
-          <button id="moreButton" class="p-3 mt-5 rounded-md font-semibold text-xl text-white  bg-red-400">Show More</button>
-        </section>
+  <header class="my-5 text-center">
+    <h1 class="fs-1 text my-4 fw-semibold text-center ">AI Universe Hub</h1>
+    <button onclick="dateSort()" class="p-2 rounded fw-semibold fs-6 text text-white bg-success">Sort By Date</button>
+  </header>
+  <main class="container mx-auto mt-5">
+    <!-- Cards Container Section  -->
+    <section id="cards-container" class=" row row-cols-1 row-cols-md-3 g-4">
 
-        <!-- Modal Section  -->
-        <section>
-            <input type="checkbox" id="my-modal-3" class="modal-toggle" />
-            <div class="modal">
-                <div class="modal-middle w-9/12">
-                    <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                   <div id="modalContainer" class="flex justify-between items-center gap-2 bg-slate-400">
-                    <div class="card w-full bg-base-100 shadow-xl">
-                        <figure><img id="detailsImage" src="" alt="Shoes" /></figure>
-                        <div class="card-body">
-                          <h2 id="detailsTitle" class="card-title">
-                            Shoes!
-                            <div class="badge badge-secondary">NEW</div>
-                          </h2>
-                          <p>If a dog chews shoes whose shoes does he choose?</p>
-                          <div class="card-actions justify-end">
-                            <div class="badge badge-outline">Fashion</div> 
-                            <div class="badge badge-outline">Products</div>
-                          </div>
-                        </div>
-                      </div>
-                    <div class="card w-full bg-red-100 shadow-xl">
-                        <figure><img id="detailsImage" src="" alt="Shoes" /></figure>
-                        <div class="card-body">
-                          <h2 id="detailsTitle" class="card-title">
-                            Shoes!
-                            <div class="badge badge-secondary">NEW</div>
-                          </h2>
-                          <p>If a dog chews shoes whose shoes does he choose?</p>
-                          <div class="card-actions justify-end">
-                            <div class="badge badge-outline">Fashion</div> 
-                            <div class="badge badge-outline">Products</div>
-                          </div>
-                        </div>
-                      </div>
-                   </div>
-                </div>
+    </section>
+
+    <!-- Show More Button section -->
+    <section class="text-center my-5">
+      <button id="moreButton" class="p-2 rounded fw-semibold fs-6 text text-white bg-success">Show More</button>
+    </section>
+
+    <!-- Modal Section  -->
+    <section>
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </section>
-        <!-- Spinner Section  -->
-        <section id="loadingSpinner" class="text-center text-9xl hidden">
-          <div class="flex items-center justify-center">
-            <div
-              class="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-              role="status">
-              <span
-                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                >Loading...</span
-              >
+            <div class="modal-body p-3 d-flex gap-3 flex-column flex-md-row ">
+              <div class="card bg-danger bg-opacity-10 border border-danger">
+                <div class="card-body">
+                  <h5 id="AiDescription" class="card-title fs-6 text fw-semibold"></h5>
+                    <div class="d-flex flex-column flex-md-row justify-content-around align-items-center gap-1 ms-0 me-0 container mx-auto">
+                      <div class="btn btn-light px-2 py-1 text-danger">
+                        <p class="text-success fw-semibold" id="BasicPlan"></p>
+                        <p class="text-success fw-semibold" id="BasicPrice"></p>
+                      </div>
+                      <div class="btn btn-light px-2 py-1 text-danger">
+                        <p class="text-warning fw-semibold" id="ProPlan"></p>
+                        <p class="text-warning fw-semibold" id="ProPrice"></p>
+                      </div>
+                      <div class="btn btn-light px-2 py-1 text-danger ">
+                        <p class="text-danger fw-semibold" id="EnterprisePlan"></p>
+                        <p class="text-danger fw-semibold" id="EnterprisePrice"></p>
+                      </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column flex-md-row ps-2">
+                  <div>
+                    <h4 class="fs-6 text fw-semibold">Features</h4>
+                    <ul class="text-secondary">
+                      <li id="features1"></li>
+                      <li id="features2"></li>
+                      <li id="features3"></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="fs-6 text fw-semibold">Integrations</h4>
+                    <ul class="text-secondary">
+                      <li id="integration1"></li>
+                      <li id="integration2"></li>
+                      <li id="integration3"></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="card p-2 container mx-auto">
+                <div class="position-relative">
+                  <img id="AiImage" class="card-img-top " alt="">
+                  <button id="accuracyButton" class="position-absolute top-2 end-0 bg-danger text-white rounded fw-semibold "><span
+                      id="accuracy"></span>% Accuracy</button>
+                </div>
+                <div class="card-body p-2">
+                  <h5 id="AiExampleInput" class="card-title text-center fw-semibold fs-6 my-3"></h5>
+                  <p id="AiExampleOutput" class="card-text text-center fs-6 text-secondary"></p>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
+    </section>
+    <!-- Loading Spinner Section  -->
+  <section>
+    <div id="loadingSpinner" class="d-flex justify-content-center align-items-center d-none">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </section>
 
-    </main>
-    <script src="./js/main.js"></script>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+  <script src="./js/main.js"></script>
 </body>
 
 </html>

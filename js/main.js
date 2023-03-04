@@ -3,127 +3,143 @@ const loadData = async () => {
     const url = 'https://openapi.programming-hero.com/api/ai/tools';
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data.data.tools);
-    displayCard(data.data.tools);
+    displayCard(data.data.tools.slice(0, 6));
 }
 
-// Spinner Function 
-const toggleSpinner = (isLoading) => {
-    const loadingSpinner = document.getElementById('loadingSpinner');
-    if (isLoading) {
-        loadingSpinner.classList.remove('hidden');
-    }
-    else {
-        loadingSpinner.classList.add('hidden');
-    }
-}
+// Spinner Element
+const loadingSpinner = document.getElementById('loadingSpinner');
+
+
+// Dates Input 
+let dates = [];
+console.log(dates);
+
 
 // Display Card Function 
 const displayCard = (cards) => {
     const cardContainer = document.getElementById('cards-container')
+    loadingSpinner.classList.remove('d-none');
     cards.forEach(card => {
         const cardFeatures = card.features
+        const date = (card.published_in)
+        dates.push(date);
         const cardDiv = document.createElement('div');
-        cardDiv.classList.add('card', 'w-full', 'card-normal', 'bg-base-100', 'shadow-xl');
+        cardDiv.classList.add('col');
         cardDiv.innerHTML = `
-        <figure><img class="w-full" src="${card.image}" /></figure>
-        <div class="card-body">
-          <h2 class="card-title text-3xl font-semibold">Features</h2>
-          <ol class="list-decimal text-lg text-stone-600 px-5">
-          <li>${card.features[0]}</li>
-          <li>${card.features[1]}</li>
-          <li>${card.features[2]}</li>
+    <div class="card h-100">
+      <img src="${card.image}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="fw-semibold card-title">Features</h5>
+        <ol class="list-decimal px-3">
+          <li>${card.features[0] ? card.features[0] : card.features[1]}</li>
+          <li>${card.features[1] ? card.features[1] : card.features[2]}</li>
+          <li>${card.features[2] ? card.features[2] : style = "display:none;"}</li>
           </ol>
           <hr>
-             <div class="flex justify-between my-3">
-                <div>
-                 <h2 class="font-semibold text-xl">${card.name}</h2>
-                 <div class="flex gap-1 mt-3">
-                 <img src="./images/Frame.png" alt="">
-                 <p class="mt-1 text-stone-600">${card.published_in}</p>
-                 </div>
-                 
-                 </div>
-
-                     <label onclick="loadDetails('${card.id}')" id="triggerModal" for="my-modal-3" class="btn hover:bg-white bg-white border-0"><img class="w-7" src="./images/vector.png" alt="" ></label>
+        <div class="my-1 d-flex justify-content-between align-items-center">
+            <div>
+                 <h5 class="fw-semibold ">${card.name ? card.name : "Anonymous AI"}</h5>
+                <div class="d-flex gap-1 align-items-center">
+                     <img src="./images/Frame.png" alt="">
+                     <p class=" mt-3 text-secondary">${card.published_in ? card.published_in : "No Published Date Found"}</p>
+                </div> 
             </div>
-        </div>
-        `
-        // modalDisplay(card);
+
+               <button onclick="loadIDDetails('${card.id}')" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+               <img class="w-7" src="./images/vector.png" alt="" >
+             </button>
+               </div>
+      </div>
+    </div>  `
         cardContainer.appendChild(cardDiv);
+        loadingSpinner.classList.add('d-none');
+
     });
 
 }
-// Load Details 
-const loadDetails = async (id) => {
+// Load Modal  Details 
+const loadIDDetails = async (id) => {
+    loadingSpinner.classList.remove('d-none');
     const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
     const res = await fetch(url);
     const data = await res.json();
-    displayDetails(data.data);
-   
-    
+    displayModalDetails(data.data);
+
+
 }
-//  Display Details 
-const displayDetails = (card) => {
+//  Display Modal Details 
+const displayModalDetails = (card) => {
+    loadingSpinner.classList.remove('d-none');
     console.log(card);
-    const detailsImage = document.getElementById('detailsImage');
-    detailsImage.innerHTML = `<img src="${card.logo}" alt="" />`
-
-    const detailsTitle = document.getElementById('detailsTitle');
-    detailsTitle.innerText = card.description;
-
-
-
+    const AiDescription = document.getElementById('AiDescription');
+    AiDescription.innerText = card.description ? card.description : "No Description Found";
+    const features1 = document.getElementById('features1')
+    features1.innerText = card.features["1"].feature_name ? card.features["1"].feature_name : "No Features Found";
+    const features2 = document.getElementById('features2')
+    features2.innerText = card.features["2"].feature_name ? card.features["2"].feature_name : "No Features Found";
+    const features3 = document.getElementById('features3')
+    features3.innerText = card.features["3"].feature_name ? card.features["3"].feature_name : "No Features Found";
+    const integration1 = document.getElementById('integration1')
+    integration1.innerText = card.integrations && card.integrations[0] ? card.integrations[0] : "No Integration Found";
+    const integration2 = document.getElementById('integration2')
+    integration2.innerText = card.integrations && card.integrations[1] ? card.integrations[1] : "No Integration Found";
+    const integration3 = document.getElementById('integration3')
+    integration3.innerText = card.integrations && card.integrations[2] ? card.integrations[2] : "No Integration Found";
+    const AiImage = document.getElementById('AiImage');
+    AiImage.src = card.image_link[0];
+    const accuracy = document.getElementById('accuracy');
+    const accuracyButton = document.getElementById('accuracyButton');
+    accuracy.innerText = card.accuracy.score === null ? accuracyButton.style.display = 'none' : card.accuracy.score * 100 ;
+    document.getElementById('AiExampleInput').innerText = card.input_output_examples === null ? "Can You Give Any Example ?" : card.input_output_examples[0].input;
+    document.getElementById('AiExampleOutput').innerText = card.input_output_examples === null ? "No ! Not YEt ! TAke A Break !!!" : card.input_output_examples[0].output;
+    // Pricing 
+    document.getElementById('BasicPlan').innerText = card.pricing === null ? "Free OF Cost" : card.pricing[0].plan;
+    document.getElementById('BasicPrice').innerText = card.pricing === null ? "" : card.pricing[0].price;
+    document.getElementById('ProPlan').innerText = card.pricing === null ? "Free OF Cost" : card.pricing[1].plan;
+    document.getElementById('ProPrice').innerText = card.pricing === null ? "" : card.pricing[1].price;
+    document.getElementById('EnterprisePlan').innerText = card.pricing === null ? "Free OF Cost" : card.pricing[2].plan;
+    document.getElementById('EnterprisePrice').innerText = card.pricing === null ? "" : card.pricing[2].price;
+    loadingSpinner.classList.add('d-none');
 };
+
+const dateSort = (dates) => {
+    sort(function (a, b) { return a - b });
+
+}
+
+
+
+
+// function sortDates() {
+//     dates.sort(function(a, b) {
+//         console.log(new Date(a) - new Date(b));
+//        }
+
+//     )
+// };
+
+
 
 
 // Show More Button
-document.getElementById('moreButton').addEventListener('click', function showMoreButtonClicked() {
-    loadData();
+const loadMoreBtn = document.getElementById('moreButton').addEventListener('click', function loadMoreBtn() {
+    loadingSpinner.classList.remove('d-none');
+    let start = 6
+    fetch('https://openapi.programming-hero.com/api/ai/tools')
+        .then(res => res.json())
+        .then(data => {
+            const nextCards = data.data.tools.slice(start, start + 6)
+            displayCard(nextCards)
+            start += 6
+        })
 
-});
+    const ShowMoreBtn = document.getElementById('moreButton');
+    ShowMoreBtn.classList.add('d-none');
+    loadingSpinner.classList.add('d-none');
+    
+})
 
 loadData();
-// document.getElementById('triggerModal').addEventListener('click', function modalDisplay(card) {
-//     const modalContainer = document.getElementById('modalContainer')
-//     const modalDiv1 = document.createElement('div');
-//     modalDiv1.classList.add('card', 'w-full', 'bg-base-100', 'shadow-xl')
-//     const modalDiv2 = document.createElement('div');
-//     modalDiv2.classList.add('card', 'w-full', 'bg-base-100', 'shadow-xl')
-//     modalDiv1.innerHTML = `
-// <figure><img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
-// <div class="card-body">
-// <h2 class="card-title">
-// ${card.name}
-
-// <div class="badge badge-secondary">NEW</div>
-// </h2>
-// <p>If a dog chews shoes whose shoes does he choose?</p>
-// <div class="card-actions justify-end">
-// <div class="badge badge-outline">Fashion</div> 
-// <div class="badge badge-outline">Products</div>
-// </div>
-// </div>
-// `
-//     modalDiv2.innerHTML = `
-// <figure><img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
-// <div class="card-body">
-// <h2 class="card-title">
-// Shoes!
-// <div class="badge badge-secondary">NEW</div>
-// </h2>
-// <p>If a dog chews shoes whose shoes does he choose?</p>
-// <div class="card-actions justify-end">
-// <div class="badge badge-outline">Fashion</div> 
-// <div class="badge badge-outline">Products</div>
-// </div>
-// </div>
-// `
-//     modalContainer.appendChild(modalDiv1)
-//     modalContainer.appendChild(modalDiv2)
-
-
-// })
 
 
 
