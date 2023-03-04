@@ -4,8 +4,8 @@ const loadData = async () => {
     const res = await fetch(url);
     const data = await res.json();
     displayCard(data.data.tools.slice(0, 6));
-    sortDates((data.data.tools.map(tool => tool.published_in)));
-   
+    DisplayDates((data.data.tools.map(tool => tool.published_in)));
+
 }
 
 
@@ -15,17 +15,22 @@ const loadData = async () => {
 const loadingSpinner = document.getElementById('loadingSpinner');
 
 
-function sortDates(dates) {
-    // Parse dates to date objects
-    const dateObjects = dates.map(date => new Date(Date.parse(date)));
-    // Sort date objects
-    dateObjects.sort((a, b) => a - b);
-    // Convert date objects back to strings
-    const sortedDates = dateObjects.map(date => date.toISOString().slice(0, 10));
-    // Return sorted dates as array of strings
-  console.log(sortedDates);
-  }
+document.getElementById('btn-sort').addEventListener( 'click', function DisplayDates(dates){
+    function sortDates(dates) {
+        // Parse dates to date objects
+        const dateObjects = dates.map(date => new Date(Date.parse(date)));
+        // Sort date objects
+        dateObjects.sort((a, b) => a - b);
+        // Convert date objects back to strings
+        const sortedDates = dateObjects.map(date => date.toISOString().slice(0, 10));
+        // Return sorted dates as array of strings
+        console.log(sortedDates);
+    }
+})
   
+
+
+
 
 // Display Card Function 
 
@@ -102,7 +107,7 @@ const displayModalDetails = (card) => {
     AiImage.src = card.image_link[0];
     const accuracy = document.getElementById('accuracy');
     const accuracyButton = document.getElementById('accuracyButton');
-    accuracy.innerText = card.accuracy.score === null ? accuracyButton.style.display = 'none' : card.accuracy.score * 100 ;
+    accuracy.innerText = card.accuracy.score === null ? accuracyButton.style.display = 'none' : card.accuracy.score * 100;
     document.getElementById('AiExampleInput').innerText = card.input_output_examples === null ? "Can You Give Any Example ?" : card.input_output_examples[0].input;
     document.getElementById('AiExampleOutput').innerText = card.input_output_examples === null ? "No! Not Yet! Take a break!!!" : card.input_output_examples[0].output;
     // Pricing 
@@ -131,7 +136,7 @@ const loadMoreBtn = document.getElementById('moreButton').addEventListener('clic
     const ShowMoreBtn = document.getElementById('moreButton');
     ShowMoreBtn.classList.add('d-none');
     loadingSpinner.classList.add('d-none');
-    
+
 })
 
 loadData();
